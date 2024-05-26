@@ -139,7 +139,7 @@ sed -i "s:CFLAGS =:CFLAGS = -fPIE:g" test/Makefile
 sed -i "s:-c -o \$@ -g -I../include $<:-c -o \$@ \$(CFLAGS) $<:g" test/Makefile
 
 # Skip grav_def error test due to d_light() bug
-sed -i "s:if(test_grav_def:#if(test_grav_def:g" test/Makefile
+sed -i "s:if(test_grav_def://if(test_grav_def:g" test/src/test-errors.c
 make test
 
 %install

@@ -30,6 +30,25 @@ and new platforms alike. It is light-weight and easy to use, with full support
 for the IAU 2000/2006 standards for sub-micro-arc-second position 
 calculations.
 
+%package solsys1
+Summary: Legacy solar-system plugin for JPL DE200 through DE421
+Requires:		%{name} = %{version}-%{release}
+
+%description solsys1
+Optional plugin library that provides legacy solar-system routines for 
+accessing older JPL DE4xx planetary data (DE200 through DE421).
+ 
+%Package solsys2
+Summary: Legacy solar-system plugin for the JPL PLEPH routines
+Requires:		%{name} = %{version}-%{release}
+
+%description solsys2
+Optional plugin library that provides legacy solar-system routines for
+accessing older JPL DE4xx planetary data. It requires a user-provided FORTRAN 
+adapter module, and the JPL PLEPH routines. This package is provided only to 
+support legacy applications that were written for that particular interfacing.
+ 
+
 %package cio-data
 Summary:		CIO location data for the SuperNOVAS C/C++ astronomy library
 Requires:		%{name} = %{version}-%{release}
@@ -44,10 +63,14 @@ sub-package
 %package devel
 Summary:		C development files for the SuperNOVAS C/C++ astronomy library
 Requires:		%{name}%{_isa} = %{version}-%{release}
+Requires:		%{name}-solsys1%{_isa} = %{version}-%{release}
+Requires:		%{name}-solsys2%{_isa} = %{version}-%{release}
 
 %description devel
 This sub-package provides C headers and non-versioned shared library symbolic 
-links for the SuperNOVAS C/C++ library.
+links for the SuperNOVAS C/C++ library. It also provides a default FORTRAN
+adapter module (as documentation) that may be used as is, or modified as 
+needed, for the the JPL PLEPH module.
 
 
 %package doc
@@ -205,15 +228,21 @@ install -m 644 -D apidoc/html/* %{buildroot}/%{_docdir}/%{name}/html/
 install -m 644 apidoc/novas.tag %{buildroot}/%{_docdir}/%{name}/%{name}.tag
 
 # ----------------------------------------------------------------------------
-# example.c
+# examples
 install -m 644 -D examples/example.c %{buildroot}/%{_docdir}/%{name}/
+install -m 644 -D examples/example-usno.txt %{buildroot}/%{_docdir}/%{name}/
+install -m 644 -D src/jplint.f %{buildroot}/%{_docdir}/%{name}/
 
 
 %files
 %license LICENSE
 %doc CHANGELOG.md
 %{_libdir}/lib%{name}.so.1{,.*}
+
+%files solsys1
 %{_libdir}/libsolsys1.so.1{,.*}
+
+%files solsys2
 %{_libdir}/libsolsys2.so.1{,.*}
 
 %files cio-data
@@ -222,6 +251,8 @@ install -m 644 -D examples/example.c %{buildroot}/%{_docdir}/%{name}/
 %files devel
 %doc README-orig.md CONTRIBUTING.md
 %doc %{_docdir}/%{name}/example.c
+%doc %{_docdir}/%{name}/example-usno.txt
+%doc %{_docdir}/%{name}/jplint.f
 %{_prefix}/include/*
 %{_libdir}/*.so
 

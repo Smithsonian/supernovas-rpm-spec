@@ -32,7 +32,6 @@ calculations.
 
 %package cio-data
 Summary:		CIO location data for the SuperNOVAS C/C++ astronomy library
-BuildArch: 		noarch
 Requires:		%{name} = %{version}-%{release}
 
 %description cio-data
@@ -83,7 +82,7 @@ cp config.mk config.bak
 CFLAGS="$CPPFLAGS $CFLAGS"
 
 # Specify the CIO locator file path, when installed
-sed -i '1 i\CFLAGS += -DDEFAULT_CIO_LOCATOR_FILE=\\"%{_datadir}/%{name}/cio_ra.bin\\"' config.mk
+sed -i '1 i\CFLAGS += -DDEFAULT_CIO_LOCATOR_FILE=\\"%{_libdir}/%{name}/cio_ra.bin\\"' config.mk
 
 # Specify where the cio_ra.bin file will be installed
 sed -i "s:/user/share/novas/cio_ra.bin:%{_datadir}/%{name}/cio_ra.bin:g" config.mk
@@ -146,6 +145,7 @@ sed -i "s:if(test_grav_def://if(test_grav_def:g" test/src/test-errors.c
 
 # Arithmetic precision differences among platform prevent running the
 # buil-in tests.
+make test
 
 %install
 
@@ -188,8 +188,8 @@ install -m 755 lib/solsys2.so %{buildroot}/%{_libdir}/libsolsys2.so.%{version}
 
 # ----------------------------------------------------------------------------
 # Install runtime CIO locator data 
-mkdir -p %{buildroot}/%{_datadir}/%{name}
-install -m 644 cio_ra.bin %{buildroot}/%{_datadir}/%{name}/cio_ra.bin
+mkdir -p %{buildroot}/%{_libdir}/%{name}
+install -m 644 cio_ra.bin %{buildroot}/%{_libdir}/%{name}/cio_ra.bin
 
 # ----------------------------------------------------------------------------
 # C header files
@@ -215,10 +215,9 @@ install -m 644 -D examples/example.c %{buildroot}/%{_docdir}/%{name}/
 %{_libdir}/lib%{name}.so.1{,.*}
 %{_libdir}/libsolsys1.so.1{,.*}
 %{_libdir}/libsolsys2.so.1{,.*}
-%dir %{_datadir}/%{name}
 
 %files cio-data
-%{_datadir}/%{name}/cio_ra.bin
+%{_libdir}/%{name}/cio_ra.bin
 
 %files devel
 %doc README-orig.md CONTRIBUTING.md

@@ -6,7 +6,6 @@ License:		Unlicense
 URL:			https://smithsonian.github.io/SuperNOVAS/
 Source0:		https://github.com/Smithsonian/SuperNOVAS/archive/refs/tags/v%{version}.tar.gz
 BuildRequires:		gcc
-BuildRequires:		gcc-gfortran
 BuildRequires:		sed
 BuildRequires:		doxygen >= 1.9.0
 Recommends:		%{name}-cio-data = %{version}-%{release}
@@ -98,6 +97,11 @@ CIO_LOCATOR_FILE=%{_datadir}/%{name}/cio_ra.bin
 # ----------------------------------------------------------------------------
 # BEGIN is build for v1.0.1
 
+# Fix signed / unsigned char confusion
+sed -i "s:char ke0_t:signed char ke0_t:g" src/novas.c
+sed -i "s:char \*ke:signed char \*ke:g" src/novas.c
+sed -i "s:char:signed char:g" src/nutation.c
+
 # We'll modify the build configuration, saving the original first
 cp config.mk config.bak
 
@@ -106,9 +110,6 @@ CFLAGS="$CPPFLAGS $CFLAGS"
 
 # Specify the CIO locator file path, when installed
 sed -i '1 i\CFLAGS += -DDEFAULT_CIO_LOCATOR_FILE=\\"%{_libdir}/%{name}/cio_ra.bin\\"' config.mk
-
-# Specify where the cio_ra.bin file will be installed
-sed -i "s:/user/share/novas/cio_ra.bin:%{_datadir}/%{name}/cio_ra.bin:g" config.mk
 
 # Use externally defined CFLAGS
 sed -i "s:CFLAGS = -Os -Wall -I\$(INC):CFLAGS += -I\$(INC):g " config.mk
@@ -131,7 +132,7 @@ make %{?_smp_mflags} solsys
 gcc -o lib/solsys1.so src/solsys1.c src/eph_manager.c $CFLAGS -Iinclude -shared -fPIC \
   -Wl,-soname,libsolsys1.so.1 $LDFLAGS -lm -Llib -l%{name}
   
-gcc -o lib/solsys2.so src/solsys2.c src/jplint.f $CFLAGS -Iinclude -shared -fPIC \
+gcc -o lib/solsys2.so src/solsys2.c $CFLAGS -Iinclude -shared -fPIC \
   -Wl,-soname,libsolsys2.so.1 $LDFLAGS -lm -Llib -l%{name}
 
 # The headless README from upstream
@@ -143,7 +144,7 @@ make %{?_smp_mflags} dox
 
 mv config.bak config.mk
 
-# make share/cio_ra.bin
+# make cio_ra.bin
 make %{?_smp_mflags} cio_ra.bin
 
 # Use the future name for the stripped-down README

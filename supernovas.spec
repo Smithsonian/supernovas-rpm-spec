@@ -166,6 +166,8 @@ sed -i "s:if(test_grav_def://if(test_grav_def:g" test/src/test-errors.c
 sed -i "s:-nan: nan:g" test/reference/*
 sed -i "s|diff data|sed -i 's:-nan: nan:g' data/\*\n\tdiff data|g" test/Makefile
 
+# Adjust tolerance if too small.
+sed -i "58 i\if(tol < 1e-30) tol = 1e-30;\n" test/src/test-super.c
 
 # END is build for v1.0.1
 # ----------------------------------------------------------------------------

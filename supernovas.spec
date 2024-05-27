@@ -99,9 +99,9 @@ CIO_LOCATOR_FILE=%{_datadir}/%{name}/cio_ra.bin
 # BEGIN is build for v1.0.1
 
 # Fix signed / unsigned char confusion
-sed -i "s:char ke0_t:signed char ke0_t:g" src/novas.c
-sed -i "s:char \*ke:signed char \*ke:g" src/novas.c
-sed -i "s:char:signed char:g" src/nutation.c
+sed -i "s:char ke0_t:int8_t ke0_t:g" src/novas.c
+sed -i "s:char \*ke:int8_t \*ke:g" src/novas.c
+sed -i "s:char:int8_t:g" src/nutation.c
 
 # We'll modify the build configuration, saving the original first
 cp config.mk config.bak
@@ -161,6 +161,11 @@ sed -i "s:-c -o \$@ -g -I../include $<:-c -o \$@ \$(CFLAGS) $<:g" test/Makefile
 
 # Skip grav_def error test due to d_light() bug
 sed -i "s:if(test_grav_def://if(test_grav_def:g" test/src/test-errors.c
+
+# Ignore difference between -nan and nan 
+sed -i "s:-nan: nan:g" test/reference/*
+sed -i "s|diff data|sed -i 's:-nan: nan:g' data/\*\n\tdiff data|g" test/Makefile
+
 
 # END is build for v1.0.1
 # ----------------------------------------------------------------------------

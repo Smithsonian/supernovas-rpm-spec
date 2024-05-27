@@ -35,19 +35,19 @@ Summary: Legacy solar-system plugin for JPL DE200 through DE421
 Requires:		%{name} = %{version}-%{release}
 
 %description solsys1
-Optional plugin library that provides legacy solar-system routines for 
-accessing older JPL DE4xx planetary data (DE200 through DE421).
+Optional SuoperNOVAS plugin library that provides legacy solar-system 
+routines for accessing older JPL planetary data (DE200 through DE421).
  
 %Package solsys2
 Summary: Legacy solar-system plugin for the JPL PLEPH routines
 Requires:		%{name} = %{version}-%{release}
 
 %description solsys2
-Optional plugin library that provides legacy solar-system routines for
-accessing older JPL DE4xx planetary data. It requires a user-provided FORTRAN 
-adapter module, and the JPL PLEPH routines. This package is provided only to 
-support legacy applications that were written for that particular interfacing.
- 
+Optional SuperNOVAS plugin library that provides legacy solar-system routines 
+for accessing older JPL planetary data through the JPL PLEPH routines. It 
+requires a user-provided FORTRAN adapter module, and PLEPH library. This 
+package is provided only to support legacy applications that were written for 
+that particular interfacing.
 
 %package cio-data
 Summary:		CIO location data for the SuperNOVAS C/C++ astronomy library

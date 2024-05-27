@@ -32,15 +32,15 @@ calculations.
 
 %package solsys1
 Summary: Legacy solar-system plugin for JPL DE200 through DE421
-Requires:		%{name} = %{version}-%{release}
+Requires:		%{name}%{_isa} = %{version}-%{release}
 
 %description solsys1
 Optional SuoperNOVAS plugin library that provides legacy solar-system 
 routines for accessing older JPL planetary data (DE200 through DE421).
  
-%Package solsys2
+%package solsys2
 Summary: Legacy solar-system plugin for the JPL PLEPH routines
-Requires:		%{name} = %{version}-%{release}
+Requires:		%{name}%{_isa} = %{version}-%{release}
 
 %description solsys2
 Optional SuperNOVAS plugin library that provides legacy solar-system routines 
@@ -51,7 +51,7 @@ that particular interfacing.
 
 %package cio-data
 Summary:		CIO location data for the SuperNOVAS C/C++ astronomy library
-Requires:		%{name} = %{version}-%{release}
+Requires:		%{name}%{_isa} = %{version}-%{release}
 
 %description cio-data
 Optional CIO location vs GCRS lookup table. This file is not normally required

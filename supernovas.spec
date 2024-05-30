@@ -6,7 +6,6 @@ License:		Unlicense
 URL:			https://smithsonian.github.io/SuperNOVAS
 Source0:		https://github.com/Smithsonian/SuperNOVAS/archive/refs/tags/v%{version}-2.tar.gz
 BuildRequires:		gcc
-BuildRequires:		gfortran
 BuildRequires:		sed
 BuildRequires:		doxygen >= 1.9.0
 Suggests:		%{name}-cio-data = %{version}-%{release}

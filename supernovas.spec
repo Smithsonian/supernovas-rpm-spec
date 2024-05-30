@@ -4,7 +4,7 @@ Release:		2%{?dist}
 Summary:		The Naval Observatory's NOVAS C astronomy library, made better 
 License:		Unlicense
 URL:			https://smithsonian.github.io/SuperNOVAS
-Source0:		https://github.com/Smithsonian/SuperNOVAS/archive/refs/tags/v1.0.1-2.tar.gz
+Source0:		https://github.com/Smithsonian/SuperNOVAS/archive/refs/tags/v%{version}-2.tar.gz
 BuildRequires:		gcc
 BuildRequires:		gfortran
 BuildRequires:		sed
@@ -111,9 +111,6 @@ install -m 755 lib/lib%{name}.so.1 %{buildroot}/%{_libdir}/lib%{name}.so.%{versi
 
 # Link libsupernovas.so.1 -> libsupernovas.so
 ( cd %{buildroot}/%{_libdir} ; ln -sf lib%{name}.so.1 lib%{name}.so )
-
-# (compat naming) Link libnovas.so -> libsupernovas.so
-( cd %{buildroot}/%{_libdir} ; ln -sf lib%{name}.so libnovas.so )
 
 # ----------------------------------------------------------------------------
 # libsolsys1.so

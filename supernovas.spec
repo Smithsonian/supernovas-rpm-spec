@@ -34,8 +34,8 @@ Summary: Legacy solar-system plugin for JPL DE200 through DE421
 Requires:		%{name}%{_isa} = %{version}-%{release}
 
 %description solsys1
-Optional SuoperNOVAS plugin library that provides legacy solar-system 
-routines for accessing older JPL planetary data (DE200 through DE421).
+Optional SuoperNOVAS plugin library that provides legacy solar-system routines 
+for accessing older JPL planetary data (DE200 through DE421).
  
 %package solsys2
 Summary: Legacy solar-system plugin for the JPL PLEPH routines
@@ -166,6 +166,7 @@ install -m 644 -D examples/* %{buildroot}/%{_docdir}/%{name}/
 %{_libdir}/libsolsys2.so.1{,.*}
 
 %files cio-data
+%dir %{_libdir}/%{name}
 %{_libdir}/%{name}/cio_ra.bin
 
 %files devel

@@ -88,7 +88,7 @@ C/C++ astronomy library.
 
 %build
 
-make %{?_smp_mflags} distro CIO_LOCATOR_FILE=%{_datadir}/%{name}/cio_ra.bin
+make %{?_smp_mflags} distro CIO_LOCATOR_FILE=%{_libdir}/%{name}/cio_ra.bin
 
 %check
 

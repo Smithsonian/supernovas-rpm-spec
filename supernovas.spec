@@ -1,6 +1,6 @@
 Name:			supernovas
 Version:		1.0.1
-Release:		2%{?dist}
+Release:		3%{?dist}
 Summary:		The Naval Observatory's NOVAS C astronomy library, made better 
 License:		Unlicense
 URL:			https://smithsonian.github.io/SuperNOVAS
@@ -9,6 +9,8 @@ BuildRequires:		gcc
 BuildRequires:		sed
 BuildRequires:		doxygen >= 1.9.0
 Suggests:		%{name}-cio-data = %{version}-%{release}
+Suggests:		%{name}-solsys1 = %{version}-%{release}
+Suggests:		%{name}-solsys2 = %{version}-%{release}
 
 %description
 
@@ -20,7 +22,7 @@ use overall.
 
 The main goals of SuperNOVAS are to improve usability, add new features, 
 promote best practices, and provide accessible documentation -- all while 
-retaining 100% API compatibility with NOVAS C 3.1. Thus, if you have written 
+retaining 100%% API compatibility with NOVAS C 3.1. Thus, if you have written 
 code for NOVAS C 3.1, you can build it with SuperNOVAS also.
 
 SuperNOVAS is entirely free to use without licensing restrictions. Its source 
@@ -86,10 +88,7 @@ C/C++ astronomy library.
 
 %build
 
-# Define where the library will look for the CIO locator data
-CIO_LOCATOR_FILE=%{_datadir}/%{name}/cio_ra.bin
-
-make %{?_smp_mflags} distro
+make %{?_smp_mflags} distro CIO_LOCATOR_FILE=%{_datadir}/%{name}/cio_ra.bin
 
 %check
 

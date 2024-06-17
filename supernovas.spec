@@ -22,8 +22,8 @@ use overall.
 
 The main goals of SuperNOVAS are to improve usability, add new features, 
 promote best practices, and provide accessible documentation -- all while 
-retaining 100%% API compatibility with NOVAS C 3.1. Thus, if you have written 
-code for NOVAS C 3.1, you can build it with SuperNOVAS also.
+retaining 100 percent API compatibility with NOVAS C 3.1. Thus, if you have 
+written code for NOVAS C 3.1, you can build it with SuperNOVAS also.
 
 SuperNOVAS is entirely free to use without licensing restrictions. Its source 
 code is compatible with the C90 standard, and hence should be suitable for old 

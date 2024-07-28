@@ -84,7 +84,7 @@ This package provides man pages and HTML documentation for the SuperNOVAS
 C/C++ astronomy library.
 
 %prep
-%setup -q -n SuperNOVAS-1.1.0-rc2
+%setup -q -n SuperNOVAS-1.1.0-rc3
 
 %build
 

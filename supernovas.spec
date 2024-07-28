@@ -133,7 +133,7 @@ install -m 755 lib/libsolsys2.so.1 %{buildroot}/%{_libdir}/libsolsys2.so.%{versi
 # ----------------------------------------------------------------------------
 # Install runtime CIO locator data 
 mkdir -p %{buildroot}/%{_datadir}/%{name}
-install -m 644 cio_ra.bin %{buildroot}/%{_datadir}/%{name}/CIO_RA.TXT
+install -m 644 data/CIO_RA.TXT %{buildroot}/%{_datadir}/%{name}/CIO_RA.TXT
 
 # ----------------------------------------------------------------------------
 # C header files

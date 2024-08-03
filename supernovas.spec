@@ -1,10 +1,10 @@
 Name:			supernovas
-Version:		1.0.1
-Release:		3%{?dist}
+Version:		1.1.0
+Release:		1%{?dist}
 Summary:		The Naval Observatory's NOVAS C astronomy library, made better 
 License:		Unlicense
 URL:			https://smithsonian.github.io/SuperNOVAS
-Source0:		https://github.com/Smithsonian/SuperNOVAS/archive/refs/tags/v%{version}-2.tar.gz
+Source0:		https://github.com/Smithsonian/SuperNOVAS/archive/refs/tags/v%{version}.tar.gz
 BuildRequires:		gcc
 BuildRequires:		sed
 BuildRequires:		doxygen >= 1.9.0
@@ -52,7 +52,7 @@ that particular interfacing.
 
 %package cio-data
 Summary:		CIO location data for the SuperNOVAS C/C++ astronomy library
-Requires:		%{name}%{_isa} = %{version}-%{release}
+BuildArch:		noarch
 
 %description cio-data
 Optional CIO location vs GCRS lookup table. This file is not normally required
@@ -84,11 +84,11 @@ This package provides man pages and HTML documentation for the SuperNOVAS
 C/C++ astronomy library.
 
 %prep
-%setup -q -n SuperNOVAS-%{version}-2
+%setup -q -n SuperNOVAS-%{version}
 
 %build
 
-make %{?_smp_mflags} distro CIO_LOCATOR_FILE=%{_libdir}/%{name}/cio_ra.bin
+make %{?_smp_mflags} distro CIO_LOCATOR_FILE=%{_datadir}/%{name}/CIO_RA.TXT
 
 %check
 
@@ -132,8 +132,8 @@ install -m 755 lib/libsolsys2.so.1 %{buildroot}/%{_libdir}/libsolsys2.so.%{versi
 
 # ----------------------------------------------------------------------------
 # Install runtime CIO locator data 
-mkdir -p %{buildroot}/%{_libdir}/%{name}
-install -m 644 cio_ra.bin %{buildroot}/%{_libdir}/%{name}/cio_ra.bin
+mkdir -p %{buildroot}/%{_datadir}/%{name}
+install -m 644 data/CIO_RA.TXT %{buildroot}/%{_datadir}/%{name}/CIO_RA.TXT
 
 # ----------------------------------------------------------------------------
 # C header files
@@ -165,8 +165,8 @@ install -m 644 -D examples/* %{buildroot}/%{_docdir}/%{name}/
 %{_libdir}/libsolsys2.so.1{,.*}
 
 %files cio-data
-%dir %{_libdir}/%{name}
-%{_libdir}/%{name}/cio_ra.bin
+%dir %{_datadir}/%{name}
+%{_datadir}/%{name}/CIO_RA.TXT
 
 %files devel
 %doc README-orig.md CONTRIBUTING.md

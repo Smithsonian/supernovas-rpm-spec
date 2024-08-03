@@ -1,10 +1,10 @@
 Name:			supernovas
-Version:		1.1.0.rc3
+Version:		1.1.0
 Release:		1%{?dist}
 Summary:		The Naval Observatory's NOVAS C astronomy library, made better 
 License:		Unlicense
 URL:			https://smithsonian.github.io/SuperNOVAS
-Source0:		https://github.com/Smithsonian/SuperNOVAS/archive/refs/tags/v1.1.0-rc3.tar.gz
+Source0:		https://github.com/Smithsonian/SuperNOVAS/archive/refs/tags/v%{version}.tar.gz
 BuildRequires:		gcc
 BuildRequires:		sed
 BuildRequires:		doxygen >= 1.9.0
@@ -84,7 +84,7 @@ This package provides man pages and HTML documentation for the SuperNOVAS
 C/C++ astronomy library.
 
 %prep
-%setup -q -n SuperNOVAS-1.1.0-rc3
+%setup -q -n SuperNOVAS-%{version}
 
 %build
 

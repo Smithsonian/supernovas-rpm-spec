@@ -1,3 +1,5 @@
+[![Copr build status](https://copr.fedorainfracloud.org/coprs/attipaci/supernovas/package/supernovas/status_image/last_build.png)](https://copr.fedorainfracloud.org/coprs/attipaci/supernovas/package/supernovas/)
+
 This repository contains `.spec` file for creating RPM packages for the SuperNOVAS C/C++ astrometry library.
 
 More information on the library is available at:

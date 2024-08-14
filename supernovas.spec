@@ -36,7 +36,7 @@ Summary: Legacy solar-system plugin for JPL DE200 through DE421
 Requires:		%{name}%{_isa} = %{version}-%{release}
 
 %description solsys1
-Optional SuoperNOVAS plugin library that provides legacy solar-system routines 
+Optional SuperNOVAS plugin library that provides legacy solar-system routines 
 for accessing older JPL planetary data (DE200 through DE421).
  
 %package solsys2

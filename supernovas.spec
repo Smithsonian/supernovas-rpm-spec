@@ -1,6 +1,6 @@
 Name:			supernovas
-Version:		1.1.0
-Release:		2%{?dist}
+Version:		1.1.1
+Release:		1%{?dist}
 Summary:		The Naval Observatory's NOVAS C astronomy library, made better 
 License:		Unlicense
 URL:			https://smithsonian.github.io/SuperNOVAS

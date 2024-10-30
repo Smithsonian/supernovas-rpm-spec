@@ -169,7 +169,7 @@ install -m 644 -D examples/* %{buildroot}/%{_docdir}/%{name}/
 %{_datadir}/%{name}/CIO_RA.TXT
 
 %files devel
-%doc README-orig.md CONTRIBUTING.md
+%doc CONTRIBUTING.md
 %doc %{_docdir}/%{name}/example.c
 %doc %{_docdir}/%{name}/example-usno.txt
 %doc %{_docdir}/%{name}/jplint.f

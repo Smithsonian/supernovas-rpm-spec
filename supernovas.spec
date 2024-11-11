@@ -1,16 +1,18 @@
+%global upstream_version	1.2.0-rc1
+
 Name:			supernovas
-Version:		1.1.1
+Version:		1.2.0.rc1
 Release:		1%{?dist}
 Summary:		The Naval Observatory's NOVAS C astronomy library, made better 
 License:		Unlicense
 URL:			https://smithsonian.github.io/SuperNOVAS
-Source0:		https://github.com/Smithsonian/SuperNOVAS/archive/refs/tags/v%{version}-2.tar.gz
+Source0:		https://github.com/Smithsonian/SuperNOVAS/archive/refs/tags/v%{upstream_version}.tar.gz
+BuildRequires:		calceph-devel%{_isa}
 BuildRequires:		gcc
 BuildRequires:		sed
 BuildRequires:		doxygen >= 1.9.0
 Suggests:		%{name}-cio-data = %{version}-%{release}
-Suggests:		%{name}-solsys1 = %{version}-%{release}
-Suggests:		%{name}-solsys2 = %{version}-%{release}
+Suggests:		%{name}-solsys-calceph = %{version}-%{release}
 
 %description
 
@@ -50,6 +52,19 @@ requires a user-provided FORTRAN adapter module, and PLEPH library. This
 package is provided only to support legacy applications that were written for 
 that particular interfacing.
 
+%package solsys-calceph
+Summary: Solar-system plugin based on the CALCEPH C library
+Requires:		%{name}%{_isa} = %{version}-%{release}
+Requires:		calceph-libs%{_isa}
+
+%description solsys-calceph
+Optional SuperNOVAS plugin library that provides Solar-system support via the 
+CALCEPH C library. It allows using both JPL (SPK) and INPOP 2.0/3.0 data files 
+with SuperNOVAS to obtain precise locations for Solar-system bodies. This 
+plugin is currently the preferred option to use for Fedora / RPM Linux 
+development, which requires use of precise Solar-system data.
+
+
 %package cio-data
 Summary:		CIO location data for the SuperNOVAS C/C++ astronomy library
 BuildArch:		noarch
@@ -84,14 +99,16 @@ This package provides man pages and HTML documentation for the SuperNOVAS
 C/C++ astronomy library.
 
 %prep
-%setup -q -n SuperNOVAS-%{version}-2
+%setup -q -n SuperNOVAS-%{upstream_version}
 
 %build
 
+export CALCEPH_SUPPORT=1
 make %{?_smp_mflags} distro CIO_LOCATOR_FILE=%{_datadir}/%{name}/CIO_RA.TXT
 
 %check
 
+export CALCEPH_SUPPORT=1
 make test
 
 %install
@@ -131,6 +148,16 @@ install -m 755 lib/libsolsys2.so.1 %{buildroot}/%{_libdir}/libsolsys2.so.%{versi
 ( cd %{buildroot}/%{_libdir} ; ln -sf libsolsys2.so.1 libsolsys2.so )
 
 # ----------------------------------------------------------------------------
+# libsolsys-calceph.so
+install -m 755 lib/libsolsys-calceph.so.1 %{buildroot}/%{_libdir}/libsolsys-calceph.so.%{version}
+
+# Link libsolsys-calceph.so.1.x.x -> libsolsys-calceph.so.1
+( cd %{buildroot}/%{_libdir} ; ln -sf libsolsys-calceph.so.{%version} libsolsys-calceph.so.1 )
+
+# Link libsolsys2.so.1 -> libsolsys2.so
+( cd %{buildroot}/%{_libdir} ; ln -sf libsolsys-calceph.so.1 libsolsys-calceph.so )
+
+# ----------------------------------------------------------------------------
 # Install runtime CIO locator data 
 mkdir -p %{buildroot}/%{_datadir}/%{name}
 install -m 644 data/CIO_RA.TXT %{buildroot}/%{_datadir}/%{name}/CIO_RA.TXT
@@ -163,6 +190,9 @@ install -m 644 -D examples/* %{buildroot}/%{_docdir}/%{name}/
 
 %files solsys2
 %{_libdir}/libsolsys2.so.1{,.*}
+
+%files solsys-calceph
+%{_libdir}/libsolsys-calceph.so.1{,.*}
 
 %files cio-data
 %dir %{_datadir}/%{name}

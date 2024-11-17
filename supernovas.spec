@@ -1,7 +1,7 @@
-%global upstream_version	1.2.0-rc1
+%global upstream_version	1.2.0-rc2
 
 Name:			supernovas
-Version:		1.2.0.rc1
+Version:		1.2.0.rc2
 Release:		1%{?dist}
 Summary:		The Naval Observatory's NOVAS C astronomy library, made better 
 License:		Unlicense
@@ -113,72 +113,8 @@ make test
 
 %install
 
-# ----------------------------------------------------------------------------
-# Install libsupernovas.so.1 runtime library
-mkdir -p %{buildroot}/%{_libdir}
-
-# ----------------------------------------------------------------------------
-# libsupernovas.so...
-install -m 755 lib/lib%{name}.so.1 %{buildroot}/%{_libdir}/lib%{name}.so.%{version}
-
-# Link libsopernovas.so.1.x.x -> libsupernovas.so.1
-( cd %{buildroot}/%{_libdir} ; ln -sf lib%{name}.so.{%version} lib%{name}.so.1 )
-
-# Link libsupernovas.so.1 -> libsupernovas.so
-( cd %{buildroot}/%{_libdir} ; ln -sf lib%{name}.so.1 lib%{name}.so )
-
-# ----------------------------------------------------------------------------
-# libsolsys1.so
-install -m 755 lib/libsolsys1.so.1 %{buildroot}/%{_libdir}/libsolsys1.so.%{version}
-
-# Link libsolsys1.so.1.x.x -> libsols dys1.so.1
-( cd %{buildroot}/%{_libdir} ; ln -sf libsolsys1.so.{%version} libsolsys1.so.1 )
-
-# Link libsolsys1.so.1 -> libsolsys1.so
-( cd %{buildroot}/%{_libdir} ; ln -sf libsolsys1.so.1 libsolsys1.so )
-
-# ----------------------------------------------------------------------------
-# libsolsys2.so
-install -m 755 lib/libsolsys2.so.1 %{buildroot}/%{_libdir}/libsolsys2.so.%{version}
-
-# Link libsolsys2.so.1.x.x -> libsolsys2.so.1
-( cd %{buildroot}/%{_libdir} ; ln -sf libsolsys2.so.{%version} libsolsys2.so.1 )
-
-# Link libsolsys2.so.1 -> libsolsys2.so
-( cd %{buildroot}/%{_libdir} ; ln -sf libsolsys2.so.1 libsolsys2.so )
-
-# ----------------------------------------------------------------------------
-# libsolsys-calceph.so
-install -m 755 lib/libsolsys-calceph.so.1 %{buildroot}/%{_libdir}/libsolsys-calceph.so.%{version}
-
-# Link libsolsys-calceph.so.1.x.x -> libsolsys-calceph.so.1
-( cd %{buildroot}/%{_libdir} ; ln -sf libsolsys-calceph.so.{%version} libsolsys-calceph.so.1 )
-
-# Link libsolsys2.so.1 -> libsolsys2.so
-( cd %{buildroot}/%{_libdir} ; ln -sf libsolsys-calceph.so.1 libsolsys-calceph.so )
-
-# ----------------------------------------------------------------------------
-# Install runtime CIO locator data 
-mkdir -p %{buildroot}/%{_datadir}/%{name}
-install -m 644 data/CIO_RA.TXT %{buildroot}/%{_datadir}/%{name}/CIO_RA.TXT
-
-# ----------------------------------------------------------------------------
-# C header files
-mkdir -p %{buildroot}/%{_prefix}/include
-install -m 644 -D include/* %{buildroot}/%{_prefix}/include/
-
-# ----------------------------------------------------------------------------
-# HTML documentation
-mkdir -p %{buildroot}/%{_docdir}/%{name}/html/search
-install -m 644 -D apidoc/html/search/* %{buildroot}/%{_docdir}/%{name}/html/search/
-rm -rf apidoc/html/search
-install -m 644 -D apidoc/html/* %{buildroot}/%{_docdir}/%{name}/html/
-install -m 644 apidoc/supernovas.tag %{buildroot}/%{_docdir}/%{name}/%{name}.tag
-
-# ----------------------------------------------------------------------------
-# examples
-install -m 644 -D examples/* %{buildroot}/%{_docdir}/%{name}/
-
+export CALCEPH_SUPPORT=1
+make prefix=%{buildroot}/%{_prefix} libdir=%{buildroot}/%{_libdir} install
 
 %files
 %license LICENSE

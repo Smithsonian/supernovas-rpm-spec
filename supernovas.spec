@@ -1,7 +1,7 @@
-%global upstream_version	1.2.0-rc2
+%global upstream_version	1.2.0-rc3
 
 Name:			supernovas
-Version:		1.2.0.rc2
+Version:		1.2.0.rc3
 Release:		1%{?dist}
 Summary:		The Naval Observatory's NOVAS C astronomy library, made better 
 License:		Unlicense
@@ -114,7 +114,7 @@ make test
 %install
 
 export CALCEPH_SUPPORT=1
-make prefix=%{buildroot}/%{_prefix} libdir=%{buildroot}/%{_libdir} install
+make DESTDIR=%{buildroot} libdir=%{_libdir} install
 
 %files
 %license LICENSE

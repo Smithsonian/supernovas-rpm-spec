@@ -7,6 +7,10 @@ Summary:		The Naval Observatory's NOVAS C astronomy library, made better
 License:		Unlicense
 URL:			https://smithsonian.github.io/SuperNOVAS
 Source0:		https://github.com/Smithsonian/SuperNOVAS/archive/refs/tags/v%{upstream_version}.tar.gz
+
+# https://fedoraproject.org/wiki/Changes/EncourageI686LeafRemoval
+ExcludeArch:    	%{ix86}
+
 BuildRequires:		calceph-devel%{_isa}
 BuildRequires:		gcc
 BuildRequires:		sed

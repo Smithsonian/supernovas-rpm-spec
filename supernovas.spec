@@ -1,18 +1,22 @@
-%global upstream_version	1.2.0
+%global upstream_version     1.2.0
 
-Name:			supernovas
-Version:		1.2.0
-Release:		1%{?dist}
-Summary:		The Naval Observatory's NOVAS C astronomy library, made better 
-License:		Unlicense
-URL:			https://smithsonian.github.io/SuperNOVAS
-Source0:		https://github.com/Smithsonian/SuperNOVAS/archive/refs/tags/v%{upstream_version}.tar.gz
-BuildRequires:		calceph-devel%{_isa}
-BuildRequires:		gcc
-BuildRequires:		sed
-BuildRequires:		doxygen >= 1.9.0
-Suggests:		%{name}-cio-data = %{version}-%{release}
-Suggests:		%{name}-solsys-calceph = %{version}-%{release}
+Name:            supernovas
+Version:         1.2.0
+Release:         5%{?dist}
+Summary:         The Naval Observatory's NOVAS C astronomy library, made better 
+License:         Unlicense
+URL:             https://smithsonian.github.io/SuperNOVAS
+Source0:         https://github.com/Smithsonian/SuperNOVAS/archive/refs/tags/v%{upstream_version}.tar.gz
+
+# No i686 calceph package to build against
+ExcludeArch:     %{ix86}
+
+BuildRequires:   calceph-devel%{_isa}
+BuildRequires:   gcc
+BuildRequires:   sed
+BuildRequires:   doxygen >= 1.9.0
+Suggests:        %{name}-cio-data = %{version}-%{release}
+Suggests:        %{name}-solsys-calceph = %{version}-%{release}
 
 %description
 
@@ -35,7 +39,7 @@ calculations.
 
 %package solsys1
 Summary: Legacy solar-system plugin for JPL DE200 through DE421
-Requires:		%{name}%{_isa} = %{version}-%{release}
+Requires:        %{name}%{?_isa} = %{version}-%{release}
 
 %description solsys1
 Optional SuperNOVAS plugin library that provides legacy solar-system routines 
@@ -43,7 +47,7 @@ for accessing older JPL planetary data (DE200 through DE421).
  
 %package solsys2
 Summary: Legacy solar-system plugin for the JPL PLEPH routines
-Requires:		%{name}%{_isa} = %{version}-%{release}
+Requires:        %{name}%{?_isa} = %{version}-%{release}
 
 %description solsys2
 Optional SuperNOVAS plugin library that provides legacy solar-system routines 
@@ -53,11 +57,9 @@ package is provided only to support legacy applications that were written for
 that particular interfacing.
 
 %package solsys-calceph
-# No i686 calceph package
-ExcludeArch:    	%{ix86}
 Summary: Solar-system plugin based on the CALCEPH C library
-Requires:		%{name}%{_isa} = %{version}-%{release}
-Requires:		calceph-libs%{_isa}
+Requires:        %{name}%{?_isa} = %{version}-%{release}
+Requires:        calceph-libs%{?_isa}
 
 %description solsys-calceph
 Optional SuperNOVAS plugin library that provides Solar-system support via the 
@@ -68,8 +70,8 @@ development, which requires use of precise Solar-system data.
 
 
 %package cio-data
-Summary:		CIO location data for the SuperNOVAS C/C++ astronomy library
-BuildArch:		noarch
+Summary:         CIO location data for the SuperNOVAS C/C++ astronomy library
+BuildArch:       noarch
 
 %description cio-data
 Optional CIO location vs GCRS lookup table. This file is not normally required
@@ -79,10 +81,10 @@ Applications that require CIO location w.r.t. the GCRS should depend on this
 sub-package
 
 %package devel
-Summary:		C development files for the SuperNOVAS C/C++ astronomy library
-Requires:		%{name}%{_isa} = %{version}-%{release}
-Requires:		%{name}-solsys1%{_isa} = %{version}-%{release}
-Requires:		%{name}-solsys2%{_isa} = %{version}-%{release}
+Summary:         C development files for the SuperNOVAS C/C++ astronomy library
+Requires:        %{name}%{?_isa} = %{version}-%{release}
+Requires:        %{name}-solsys1%{?_isa} = %{version}-%{release}
+Requires:        %{name}-solsys2%{?_isa} = %{version}-%{release}
 
 %description devel
 This sub-package provides C headers and non-versioned shared library symbolic 
@@ -92,9 +94,9 @@ needed, for the the JPL PLEPH module.
 
 
 %package doc
-Summary:		Documentation for the SuperNOVAS C/C++ astronomy library
-BuildArch:		noarch
-Requires:		%{name} = %{version}-%{release}
+Summary:         Documentation for the SuperNOVAS C/C++ astronomy library
+BuildArch:       noarch
+Requires:        %{name} = %{version}-%{release}
 
 %description doc
 This package provides man pages and HTML documentation for the SuperNOVAS 
@@ -138,14 +140,15 @@ make DESTDIR=%{buildroot} libdir=%{_libdir} install
 
 %files devel
 %doc CONTRIBUTING.md
-%doc %{_docdir}/%{name}/*
+%dir %{_docdir}/%{name}
+%doc %{_docdir}/%{name}/*.c
+%doc %{_docdir}/%{name}/*.f
 %{_prefix}/include/*
 %{_libdir}/*.so
 
 %files doc
 %doc %{_docdir}/%{name}/%{name}.tag
 %doc %{_docdir}/%{name}/html
-
 
 %changelog
 %autochangelog

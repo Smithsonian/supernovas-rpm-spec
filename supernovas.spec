@@ -1,7 +1,7 @@
-%global upstream_version	1.2.0-rc5
+%global upstream_version	1.2.0
 
 Name:			supernovas
-Version:		1.2.0.rc5
+Version:		1.2.0
 Release:		1%{?dist}
 Summary:		The Naval Observatory's NOVAS C astronomy library, made better 
 License:		Unlicense
@@ -136,10 +136,7 @@ make DESTDIR=%{buildroot} libdir=%{_libdir} install
 
 %files devel
 %doc CONTRIBUTING.md
-%doc %{_docdir}/%{name}/example.c
-%doc %{_docdir}/%{name}/example-usno.txt
-%doc %{_docdir}/%{name}/readeph0.c
-%doc %{_docdir}/%{name}/jplint.f
+%doc %{_docdir}/%{name}/*
 %{_prefix}/include/*
 %{_libdir}/*.so
 

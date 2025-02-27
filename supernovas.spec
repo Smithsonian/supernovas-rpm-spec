@@ -1,7 +1,7 @@
-%global upstream_version     1.3.0-rc2
+%global upstream_version     1.3.0-rc3
 
 Name:            supernovas
-Version:         1.3.0.rc2
+Version:         1.3.0.rc3
 Release:         %autorelease
 Summary:         The Naval Observatory's NOVAS C astronomy library, made better 
 License:         Unlicense
@@ -11,7 +11,7 @@ Source0:         https://github.com/Smithsonian/SuperNOVAS/archive/refs/tags/v%{
 # No i686 calceph package to build against
 ExcludeArch:     %{ix86}
 
-BuildRequires:   calceph-devel%{_isa}
+BuildRequires:   calceph-devel%{_isa} >= 4.0.0
 BuildRequires:   gcc
 BuildRequires:   sed
 BuildRequires:   doxygen >= 1.9.0
@@ -59,7 +59,7 @@ that particular interfacing.
 %package solsys-calceph
 Summary: Solar-system plugin based on the CALCEPH C library
 Requires:        %{name}%{?_isa} = %{version}-%{release}
-Requires:        calceph-libs%{?_isa}
+Requires:        calceph-libs%{?_isa} >= 4.0.0
 
 %description solsys-calceph
 Optional SuperNOVAS plugin library that provides Solar-system support via the 

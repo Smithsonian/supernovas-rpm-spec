@@ -1,7 +1,7 @@
-%global upstream_version     1.3.0-rc4
+%global upstream_version     1.3.0-rc5
 
 Name:            supernovas
-Version:         1.3.0.rc4
+Version:         1.3.0~rc5
 Release:         %autorelease
 Summary:         The Naval Observatory's NOVAS C astronomy library, made better 
 License:         Unlicense
@@ -97,11 +97,10 @@ needed, for the the JPL PLEPH module.
 %package doc
 Summary:         Documentation for the SuperNOVAS C/C++ astronomy library
 BuildArch:       noarch
-Requires:        %{name} = %{version}-%{release}
 
 %description doc
-This package provides man pages and HTML documentation for the SuperNOVAS 
-C/C++ astronomy library.
+This package provides HTML documentation, examples, and legacy adapter 
+templates for the SuperNOVAS C/C++ astronomy library.
 
 %prep
 %setup -q -n SuperNOVAS-%{upstream_version}
@@ -140,16 +139,17 @@ make DESTDIR=%{buildroot} libdir=%{_libdir} install
 %{_datadir}/%{name}/CIO_RA.TXT
 
 %files devel
-%doc CONTRIBUTING.md
-%dir %{_docdir}/%{name}
-%doc %{_docdir}/%{name}/*.c
-%doc %{_docdir}/%{name}/*.f
-%{_prefix}/include/*
+%{_includedir}/*
 %{_libdir}/*.so
+%doc CONTRIBUTING.md
 
 %files doc
+%license LICENSE
+%dir %{_docdir}/%{name}
 %doc %{_docdir}/%{name}/%{name}.tag
+%doc %{_docdir}/%{name}/example*.c
 %doc %{_docdir}/%{name}/html
+%doc %{_docdir}/%{name}/legacy
 
 %changelog
 %autochangelog

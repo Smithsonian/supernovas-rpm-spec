@@ -120,6 +120,11 @@ make test
 export CALCEPH_SUPPORT=1
 make DESTDIR=%{buildroot} libdir=%{_libdir} install
 
+# TODO remove in next rc
+rm -f %{buildroot}/%{_docdir}/%{name}/example-*
+rm -rf %{buildroot}/%{_docdir}/%{name}/legacy
+
+
 %files
 %license LICENSE
 %doc CHANGELOG.md
@@ -141,15 +146,15 @@ make DESTDIR=%{buildroot} libdir=%{_libdir} install
 %files devel
 %{_includedir}/*
 %{_libdir}/*.so
+%doc examples
+%doc legacy
 %doc CONTRIBUTING.md
 
 %files doc
 %license LICENSE
 %dir %{_docdir}/%{name}
-%doc %{_docdir}/%{name}/%{name}.tag
-%doc %{_docdir}/%{name}/example*.c
+%doc %{_docdir}/%{name}/supernovas.tag
 %doc %{_docdir}/%{name}/html
-%doc %{_docdir}/%{name}/legacy
 
 %changelog
 %autochangelog

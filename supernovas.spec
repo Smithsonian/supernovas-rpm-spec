@@ -1,7 +1,7 @@
-%global upstream_version     1.5.0-rc2
+%global upstream_version     1.5.0-rc3
 
 Name:            supernovas
-Version:         1.5.0~rc2
+Version:         1.5.0~rc3
 Release:         %autorelease
 Summary:         The Naval Observatory's NOVAS C astronomy library, made better 
 License:         Unlicense
@@ -13,8 +13,8 @@ ExcludeArch:     %{ix86}
 
 BuildRequires:   calceph-devel%{_isa} >= 4.0.0
 BuildRequires:   gcc
-BuildRequires:   sed
-BuildRequires:   doxygen >= 1.9.0
+BuildRequires:   cmake
+BuildRequires:   doxygen >= 1.13.0
 Suggests:        %{name}-cio-data = %{version}-%{release}
 Suggests:        %{name}-solsys-calceph = %{version}-%{release}
 
@@ -68,7 +68,6 @@ with SuperNOVAS to obtain precise locations for Solar-system bodies. This
 plugin is currently the preferred option to use for Fedora / RPM Linux 
 development, which requires use of precise Solar-system data.
 
-
 %package cio-data
 Summary:         CIO location data for the SuperNOVAS C/C++ astronomy library
 BuildArch:       noarch
@@ -93,7 +92,6 @@ links for the SuperNOVAS C/C++ library. It also provides a default FORTRAN
 adapter module (as documentation) that may be used as is, or modified as 
 needed, for the the JPL PLEPH module.
 
-
 %package doc
 Summary:         Documentation for the SuperNOVAS C/C++ astronomy library
 BuildArch:       noarch
@@ -106,19 +104,20 @@ templates for the SuperNOVAS C/C++ astronomy library.
 %setup -q -n SuperNOVAS-%{upstream_version}
 
 %build
+%cmake \
+    -DBUILD_SHARED_LIBS=ON \
+    -DBUILD_DOC=ON \
+    -DENABLE_SOLSYS1=ON \
+    -DENABLE_SOLSYS2=ON \
+    -DENABLE_CALCEPH=ON 
 
-export CALCEPH_SUPPORT=1
-make %{?_smp_mflags} distro CIO_LOCATOR_FILE=%{_datadir}/%{name}/CIO_RA.TXT
-
-%check
-
-export CALCEPH_SUPPORT=1
-make test
+%cmake_build
 
 %install
+%cmake_install
 
-export CALCEPH_SUPPORT=1
-make DESTDIR=%{buildroot} libdir=%{_libdir} install
+%check
+%ctest
 
 %files
 %license LICENSE
@@ -134,16 +133,16 @@ make DESTDIR=%{buildroot} libdir=%{_libdir} install
 %files solsys-calceph
 %{_libdir}/libsolsys-calceph.so.1{,.*}
 
-%files cio-data
-%dir %{_datadir}/%{name}
-%{_datadir}/%{name}/CIO_RA.TXT
-
 %files devel
 %{_includedir}/*.h
 %{_libdir}/*.so
+%{_libdir}/cmake/supernovas
+%{_libdir}/pkgconfig/supernovas.pc
+%doc doc/*.md 
 %doc examples
 %doc legacy
 %doc CONTRIBUTING.md
+
 
 %files doc
 %license LICENSE

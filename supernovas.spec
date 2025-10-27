@@ -1,7 +1,7 @@
-%global upstream_version     1.5.0-rc8
+%global upstream_version     1.5.0
 
 Name:            supernovas
-Version:         1.5.0~rc8
+Version:         1.5.0
 Release:         %autorelease
 Summary:         The Naval Observatory's NOVAS C astronomy library, made better 
 License:         Unlicense
@@ -55,9 +55,9 @@ development, which requires use of precise Solar-system data.
 %package devel
 Summary:         C development files for the SuperNOVAS C/C++ astronomy library
 Requires:        %{name}%{?_isa} = %{version}-%{release}
-Requires:        %{name}-solsys1%{?_isa} = %{version}-%{release}
-Requires:        %{name}-solsys2%{?_isa} = %{version}-%{release}
 Requires:        %{name}-solsys-calceph%{?_isa} = %{version}-%{release}
+Obsoletes:       %{name}-solsys1 < %{version}-%{release} 
+Obsoletes:       %{name}-solsys2 < %{version}-%{release} 
 
 %description devel
 This sub-package provides C headers and non-versioned shared library symbolic 

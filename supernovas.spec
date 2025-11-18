@@ -1,7 +1,7 @@
-%global upstream_version     1.5.0
+%global upstream_version     1.5.1-rc1
 
 Name:            supernovas
-Version:         1.5.0
+Version:         1.5.1~rc1
 Release:         %autorelease
 Summary:         The Naval Observatory's NOVAS C astronomy library, made better 
 License:         Unlicense
@@ -74,7 +74,7 @@ This package provides HTML documentation, examples, and legacy adapter
 templates for the SuperNOVAS C/C++ astronomy library.
 
 %prep
-%setup -q -n SuperNOVAS-%{upstream_version}
+%autosetup -n SuperNOVAS-%{upstream_version}
 
 %build
 %cmake \
@@ -93,7 +93,7 @@ templates for the SuperNOVAS C/C++ astronomy library.
 %files
 %license LICENSE
 %doc CHANGELOG.md
-%{_libdir}/lib%{name}.so.1{,.*}
+%{_libdir}/libsupernovas.so.1{,.*}
 
 %files solsys-calceph
 %{_libdir}/libsolsys-calceph.so.1{,.*}
